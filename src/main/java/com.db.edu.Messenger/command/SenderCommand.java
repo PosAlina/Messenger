@@ -10,15 +10,14 @@ import java.util.List;
 public class SenderCommand extends Command {
 
 
-    private List<BufferedWriter> receiversList;
+    public static List<BufferedWriter> receiversList;
     //private final Date date;
     private final SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
     private String dateInString;
     private final String message;
-    public SenderCommand(String dateInString, String message,List<BufferedWriter> receiversList) {
+    public SenderCommand(String dateInString, String message) {
         this.message = message;
         this.dateInString = dateInString;
-        this.receiversList = receiversList;
     }
 
     @Override

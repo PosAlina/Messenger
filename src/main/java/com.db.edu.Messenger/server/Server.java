@@ -2,35 +2,26 @@ package com.db.edu.Messenger.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class Server {
-    private static int port = 8080;
-    private static ServerSocket serverSocket;
+    private static ServerSocket serverSocketSender;
+    private static ServerSocket serverSocketReceiver;
 
     public static void main(String[] args) {
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocketSender = new ServerSocket(8080);
+            SenderAcceptor senderAcceptor = new SenderAcceptor(serverSocketSender);
+            senderAcceptor.start();
         } catch (IOException e) {
-            System.out.println("Can`t start server");
+            System.out.println("Can`t start sender server");
         }
 
-        listenConnection();
-    }
-    public static void listenConnection() {
-        while (true) {
-            try {
-                Socket client = serverSocket.accept();
-                ClientLoggingSession clientLoggingSession = new ClientLoggingSession(client);
-                clientLoggingSession.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            serverSocketReceiver = new ServerSocket(8081);
+            ReceiverAcceptor receiverAcceptor = new ReceiverAcceptor(serverSocketReceiver);
+            receiverAcceptor.start();
+        } catch (IOException e) {
+            System.out.println("Can`t start receiver server");
         }
     }
-
-    public void close() {
-
-    }
-
 }

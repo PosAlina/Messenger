@@ -1,12 +1,12 @@
 package com.db.edu.Messenger.server;
 
+import com.db.edu.Messenger.command.Command;
 import com.db.edu.Messenger.command.HistoryCommand;
 import com.db.edu.Messenger.command.SenderCommand;
-import com.db.edu.Messenger.command.Command;
 
 public class CommandRequestHandler {
     public static Command parseClientMessage (String message) {
-        String[] clientCommand = message.split("\\s+", 2);
+        String[] clientCommand = message.split("\\s+", 3);
         switch (clientCommand[1]) {
             case "/snd":
                 return new SenderCommand(clientCommand[0], clientCommand[2]);

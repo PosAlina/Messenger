@@ -1,17 +1,19 @@
 package com.db.edu.Messenger.server;
 
+import com.db.edu.Messenger.command.Command;
+import com.db.edu.Messenger.command.SenderCommand;
+
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientLoggingSession extends Thread {
+public class ClientReceiverSession extends Thread {
     private Socket client;
-//    private LoggerController loggerController;
     private ClientConnectionService clientConnectionService;
 
-    ClientLoggingSession(Socket client) {
-//        this.loggerController = loggerController;
+    ClientReceiverSession(Socket client) {
         this.client = client;
         clientConnectionService = new ClientConnectionService(client);
+        SenderCommand.receiversList.add(clientConnectionService.getClientOutputStream());
     }
 
     @Override
@@ -25,17 +27,8 @@ public class ClientLoggingSession extends Thread {
         try {
             while (!isInterrupted()) {
                 String messageClientRepresentation = clientConnectionService.getClientLogMessage();
-//                Command messageInternalRepresentation = LogRequestHandler.parseClientMessage(messageClientRepresentation);
-//                try {
-//                    if (messageInternalRepresentation instanceof FlushCommand) {
-//                        loggerController.flush();
-//                    } else {
-//                        loggerController.log(messageInternalRepresentation);
-//                    }
-//                } catch (LogSaverException e) {
-//                    MessageStatus = e.getMessage();
-//                }
-
+                Command messageInternalRepresentation = CommandRequestHandler.parseClientMessage(messageClientRepresentation);
+                messageClientRepresentation.execute();
                 clientConnectionService.passCommandExecutionStatus(MessageStatus);
                 MessageStatus = "OK";
             }
