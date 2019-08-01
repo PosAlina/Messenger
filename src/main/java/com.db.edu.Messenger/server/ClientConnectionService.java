@@ -7,8 +7,6 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientConnectionService {
-    private int port;
-    private Socket client;
     private BufferedReader clientInputStream;
     private BufferedWriter clientOutputStream;
 
@@ -38,6 +36,8 @@ public class ClientConnectionService {
         }
         return null;
     }
+
+    public BufferedWriter getClientOutputStream() { return clientOutputStream; }
 
     public void passCommandExecutionStatus(String commandExecutionStatus) {
         try {
