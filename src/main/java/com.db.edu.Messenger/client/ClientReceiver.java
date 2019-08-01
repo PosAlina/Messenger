@@ -14,7 +14,7 @@ public class ClientReceiver {
             connectionOpen = openConnection(connectionOpen, server);
             while (connectionOpen) {
                 String message = receiveMessage();
-                printMessage(message);
+                System.out.println(message);
             }
             closeConnection();
         } catch (IOException e) {
@@ -48,10 +48,10 @@ public class ClientReceiver {
     }
 
     private static String receiveMessage() throws IOException {
-        return in.readLine();
+        System.out.println("Not receive");
+        String message = in.readLine();
+        System.out.println("Receive: " + message + "!");
+        return message;
     }
 
-    private static void printMessage(String message) throws IOException {
-        System.out.println(message);
-    }
 }
