@@ -22,9 +22,13 @@ public class ClientSenderSession extends Thread {
     public void logClientMessages() {
         String MessageStatus = "OK";
 
+        System.out.println("log sender messages");
+
         try {
             while (!isInterrupted()) {
+                System.out.println("log message while");
                 String messageClientRepresentation = clientConnectionService.getClientLogMessage();
+                System.out.println(messageClientRepresentation);
                 Command messageInternalRepresentation = CommandRequestHandler.parseClientMessage(messageClientRepresentation);
                 messageInternalRepresentation.execute();
                 clientConnectionService.passCommandExecutionStatus(MessageStatus);

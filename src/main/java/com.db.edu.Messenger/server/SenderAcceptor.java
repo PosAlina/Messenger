@@ -13,6 +13,7 @@ public class SenderAcceptor extends Thread {
 
     @Override
     public void run() {
+        System.out.println("sender acceptor");
         while (true) {
             try {
                 Socket client = serverSocket.accept();
