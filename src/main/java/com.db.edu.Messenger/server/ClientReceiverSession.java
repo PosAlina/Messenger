@@ -18,7 +18,9 @@ public class ClientReceiverSession extends Thread {
 
     @Override
     public void run() {
-        logClientMessages();
+        while (!isInterrupted()) {
+
+        }
     }
 
     public void logClientMessages() {
@@ -28,7 +30,7 @@ public class ClientReceiverSession extends Thread {
             while (!isInterrupted()) {
                 String messageClientRepresentation = clientConnectionService.getClientLogMessage();
                 Command messageInternalRepresentation = CommandRequestHandler.parseClientMessage(messageClientRepresentation);
-                messageClientRepresentation.execute();
+
                 clientConnectionService.passCommandExecutionStatus(MessageStatus);
                 MessageStatus = "OK";
             }
