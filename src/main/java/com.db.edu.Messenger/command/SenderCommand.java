@@ -15,9 +15,10 @@ public class SenderCommand extends Command {
     private final SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
     private String dateInString;
     private final String message;
-    public SenderCommand(String dateInString, String message) {
+    public SenderCommand(String dateInString, String message,List<BufferedWriter> receiversList) {
         this.message = message;
         this.dateInString = dateInString;
+        this.receiversList = receiversList;
     }
 
     @Override
@@ -27,9 +28,10 @@ public class SenderCommand extends Command {
 
     @Override
     void send() {
+        String answer = generateAns();
         for(BufferedWriter receiver: receiversList){
             try {
-                receiver.write(generateAns());
+                receiver.write(answer);
             } catch (IOException e) {
                 System.out.println("Can't send to message");
             }
