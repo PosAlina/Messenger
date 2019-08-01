@@ -5,6 +5,8 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.db.edu.Messenger.exceptions.ClientConnectionException;
+
 public class ClientSender {
     private final static int PORT = 8080;
     private static BufferedReader in;
@@ -12,11 +14,24 @@ public class ClientSender {
     private static BufferedReader console;
     private static String userName;
 
-
     public static void main(String[] args) {
         boolean connectionOpen = false;
         try (final Socket server = new Socket("localhost", PORT)) {
             connectionOpen = openConnection(connectionOpen, server);
+            new Thread(() -> {
+                try {
+                    while (true) {
+                        in.readLine();
+                    }
+                } catch (IOException e) {
+                    try {
+                        closeConnection();
+                    } catch (ClientConnectionException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }).start();
+            authorization();
             while (connectionOpen) {
                 String message = readMessage();
                 String data = parseDate();
@@ -32,8 +47,8 @@ public class ClientSender {
                 connectionOpen = send(data + " " + message);
             }
             closeConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | ClientConnectionException e) {
+            System.out.println("Connection isn`t establish");
         }
     }
 
@@ -62,7 +77,7 @@ public class ClientSender {
         return formatter.format(date);
     }
 
-    private static boolean openConnection(boolean connectionOpen, Socket server) {
+    private static boolean openConnection(boolean connectionOpen, Socket server) throws ClientConnectionException {
         if (connectionOpen) return true;
         try {
             in = new BufferedReader(
@@ -77,28 +92,47 @@ public class ClientSender {
                     new InputStreamReader(
                             new BufferedInputStream(
                                     System.in)));
-            //inputUserName();
             return true;
         } catch (IOException e) {
-            return false;
+            throw new ClientConnectionException("Don't connect in client part");
+        }
+    }
+
+    private static void authorization() throws ClientConnectionException {
+        try {
+            inputUserName();
+        } catch (IOException e) {
+            throw new ClientConnectionException("Don't connect in client part");
         }
     }
 
     private static void inputUserName() throws IOException {
+        System.out.println("Please, input your name with command '/chid'.");
         while (true) {
             String message = readMessage();
             String[] commandAndMessage = message.split(" ");
-            if ("/chid".equals(commandAndMessage[0]))  {
-                userName = commandAndMessage[1];
+            if ("/chid".equals(commandAndMessage[0])) {
+                if (commandAndMessage.length <= 1) {
+                    System.out.println("Please, input your other name with command '/chid'.");
+                } else {
+                    userName = commandAndMessage[1];
+                    checkCorrectName(userName);
+                    break;
+                }
             }
         }
     }
 
-    private static void closeConnection() {
+    private static void checkCorrectName(String userName) throws IOException {
+        out.write("#sender " + userName);
+    }
+
+    private static void closeConnection() throws ClientConnectionException {
         try {
             out.close();
             in.close();
         } catch (IOException e) {
+            throw new ClientConnectionException("Error in close connection");
         }
     }
 
