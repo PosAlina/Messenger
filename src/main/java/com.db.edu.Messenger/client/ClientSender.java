@@ -29,7 +29,6 @@ public class ClientSender {
                     continue;
                 }
 
-                System.out.println(data + " " + message);
                 connectionOpen = send(data + " " + message);
             }
             closeConnection();
@@ -78,7 +77,7 @@ public class ClientSender {
                     new InputStreamReader(
                             new BufferedInputStream(
                                     System.in)));
-            inputUserName();
+            //inputUserName();
             return true;
         } catch (IOException e) {
             return false;
