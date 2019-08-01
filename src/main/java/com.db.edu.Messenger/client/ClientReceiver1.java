@@ -3,7 +3,7 @@ package com.db.edu.Messenger.client;
 import java.io.*;
 import java.net.Socket;
 
-public class ClientReceiver {
+public class ClientReceiver1 {
     private final static int PORT = 8081;
     private static BufferedReader in;
     private static BufferedWriter out;

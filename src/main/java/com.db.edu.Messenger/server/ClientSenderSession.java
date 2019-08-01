@@ -7,10 +7,12 @@ import java.net.Socket;
 
 public class ClientSenderSession extends Thread {
     private Socket client;
+    private String name;
     private ClientConnectionService clientConnectionService;
 
-    ClientSenderSession(Socket client) {
+    ClientSenderSession(Socket client, String name) {
         this.client = client;
+        this.name = name;
         clientConnectionService = new ClientConnectionService(client);
     }
 
@@ -20,25 +22,21 @@ public class ClientSenderSession extends Thread {
     }
 
     public void logClientMessages() {
-        String MessageStatus = "OK";
-
-        System.out.println("log sender messages");
+        String messageStatus = "OK";
 
         try {
             while (!isInterrupted()) {
-                System.out.println("log message while");
                 String messageClientRepresentation = clientConnectionService.getClientLogMessage();
-                System.out.println(messageClientRepresentation);
                 Command messageInternalRepresentation = CommandRequestHandler.parseClientMessage(messageClientRepresentation);
                 messageInternalRepresentation.execute();
-                clientConnectionService.passCommandExecutionStatus(MessageStatus);
-                MessageStatus = "OK";
+                clientConnectionService.passCommandExecutionStatus(messageStatus);
+                messageStatus = "OK";
             }
         } catch (Exception e) {
             System.out.println("Client closed connection");
+        } finally {
+            close();
         }
-
-        close();
     }
 
     public void close() {
@@ -47,14 +45,14 @@ public class ClientSenderSession extends Thread {
                 client.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         if (clientConnectionService != null) {
             try {
                 clientConnectionService.close();
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
     }
