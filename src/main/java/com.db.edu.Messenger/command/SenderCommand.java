@@ -4,11 +4,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class SenderCommand extends Command {
-    public static List<BufferedWriter> receiversList;
+    public static List<BufferedWriter> receiversList = new ArrayList<BufferedWriter>();
 
     //private final Date date;
     private final SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
@@ -22,7 +23,7 @@ public class SenderCommand extends Command {
 
     @Override
     String generateAns() {
-        return dateInString + message;
+        return dateInString + " " + message;
     }
 
     @Override
@@ -31,6 +32,8 @@ public class SenderCommand extends Command {
         for(BufferedWriter receiver: receiversList){
             try {
                 receiver.write(answer);
+                receiver.newLine();
+                receiver.flush();
             } catch (IOException e) {
                 System.out.println("Can't send to message");
             }
