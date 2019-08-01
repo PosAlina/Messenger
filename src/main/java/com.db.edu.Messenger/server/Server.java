@@ -15,5 +15,22 @@ public class Server {
             System.out.println("Can`t start server");
         }
 
+        listenConnection();
     }
+    public static void listenConnection() {
+        while (true) {
+            try {
+                Socket client = serverSocket.accept();
+                ClientLoggingSession clientLoggingSession = new ClientLoggingSession(client);
+                clientLoggingSession.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void close() {
+
+    }
+
 }
