@@ -4,19 +4,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CommandHistory extends Single implements CommandInterface {
+public class HistoryCommand extends Command {
     Date date;
     SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
-    public CommandHistory(String dateInString) {
+    public HistoryCommand(String dateInString) {
         try {
             date = formatter.parse(dateInString);
         } catch (ParseException e) {
             System.out.println("Error! Wrong date format!");
         }
     }
-    
+
     @Override
-    public void executeCommand() {
-        
+    String generateAns() {
+        return null;
+    }
+
+    @Override
+    void send() {
+
     }
 }
