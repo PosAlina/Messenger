@@ -18,7 +18,7 @@ public class ClientReceiver {
             }
             closeConnection();
         } catch (IOException e) {
-            e.printStackTrace();
+            closeConnection();
         }
     }
 
@@ -33,6 +33,7 @@ public class ClientReceiver {
                     new OutputStreamWriter(
                             new BufferedOutputStream(
                                     server.getOutputStream())));
+            out.write("#receiver");
             return true;
         } catch (IOException e) {
             return false;
@@ -48,9 +49,7 @@ public class ClientReceiver {
     }
 
     private static String receiveMessage() throws IOException {
-        System.out.println("Not receive");
         String message = in.readLine();
-        System.out.println("Receive: " + message + "!");
         return message;
     }
 
