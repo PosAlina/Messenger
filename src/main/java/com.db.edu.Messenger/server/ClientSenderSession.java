@@ -1,9 +1,12 @@
 package com.db.edu.Messenger.server;
 
-import com.db.edu.Messenger.command.Command;
+import com.db.edu.Messenger.server.command.Command;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ClientSenderSession extends Thread {
     private Socket client;
@@ -27,7 +30,8 @@ public class ClientSenderSession extends Thread {
         try {
             while (!isInterrupted()) {
                 String messageClientRepresentation = clientConnectionService.getClientLogMessage();
-                Command messageInternalRepresentation = CommandRequestHandler.parseClientMessage(messageClientRepresentation);
+
+                Command messageInternalRepresentation = clientConnectionService.parseClientMessage(messageClientRepresentation);
                 messageInternalRepresentation.execute();
                 clientConnectionService.passCommandExecutionStatus(messageStatus);
                 messageStatus = "OK";

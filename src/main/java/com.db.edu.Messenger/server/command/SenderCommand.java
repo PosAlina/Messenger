@@ -1,5 +1,7 @@
 package com.db.edu.Messenger.server.command;
 
+import com.db.edu.Messenger.server.ClientReceiverSession;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -7,16 +9,17 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SenderCommand extends Command {
-    protected static List<BufferedWriter> receiversList = new CopyOnWriteArrayList<>();
+    private List<BufferedWriter> receiversList;
 
     //private final Date date;
     private final SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
     private String dateInString;
     private final String message;
 
-    public SenderCommand(String dateInString, String message) {
+    public SenderCommand(String dateInString, String message, List<BufferedWriter> receiversList) {
         this.message = message;
         this.dateInString = dateInString;
+        this.receiversList = receiversList;
     }
 
     @Override
