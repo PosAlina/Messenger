@@ -53,9 +53,7 @@ public class ClientConnector {
 
     public void checkConnection() throws ClientConnectionException {
         try {
-            System.out.println("checkstart");
             receive();
-            System.out.println("checkend");
 
         } catch (ClientConnectionException e) {
             closeConnection();

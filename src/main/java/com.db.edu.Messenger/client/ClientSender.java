@@ -62,6 +62,10 @@ public class ClientSender {
                 continue;
             }
             clientConnector.send(date + " " + message);
+            if (clientMessageHanlder.isHistoryMessage(message)) {
+                message = clientConnector.receive();
+                clientConnector.print(message);
+            }
         }
 
         clientConnector.closeConnection();
