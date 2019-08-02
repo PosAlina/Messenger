@@ -1,10 +1,12 @@
 package com.db.edu.Messenger.server;
 
-import com.db.edu.Messenger.command.Command;
-import com.db.edu.Messenger.command.SenderCommand;
+import com.db.edu.Messenger.server.command.SenderCommand;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ClientReceiverSession extends Thread {
     private Socket client;
@@ -15,7 +17,7 @@ public class ClientReceiverSession extends Thread {
         this.client = client;
         this.name = name;
         clientConnectionService = new ClientConnectionService(client);
-        SenderCommand.receiversList.add(clientConnectionService.getClientOutputStream());
+        ClientConnectionService.addReceiver(clientConnectionService.getClientOutputStream());
     }
 
     @Override
