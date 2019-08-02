@@ -48,6 +48,7 @@ public class SenderCommand extends Command {
             fileWriter.write(answer);
             fileWriter.newLine();
             fileWriter.flush();
+            fileWriter.close();
         } catch (IOException e) {
             System.out.println("Can't save message");
         }
