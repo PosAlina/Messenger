@@ -10,11 +10,31 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <configuration>
+                    <programs>
+                        <program>
+                            <mainClass>com.db.edu.Messenger.server.Server</mainClass>
+                            <name>server</name>
+                        </program>
+                        <program>
+                            <mainClass>com.db.edu.Messenger.client.ClientReceiver</mainClass>
+                            <name>clientReceiver</name>
+                        </program>
+                        <program>
+                            <mainClass>com.db.edu.Messenger.client.ClientSender</mainClass>
+                            <name>clientSender</name>
+                        </program>
+                    </programs>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>7</source>
-                    <target>7</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
