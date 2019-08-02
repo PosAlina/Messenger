@@ -10,12 +10,10 @@ import java.io.*;
 
 public class HistoryCommand extends Command {
     private BufferedWriter receiver;
-    private final String messageDate;
     private BufferedReader fileReader;
     private final String fileName = "history.txt";
 
-    public HistoryCommand(String messageDate, BufferedWriter receiver) {
-        this.messageDate = messageDate;
+    public HistoryCommand(BufferedWriter receiver) {
         try {
             fileReader = new BufferedReader(new FileReader(new File(fileName)));
         } catch (IOException e) {
