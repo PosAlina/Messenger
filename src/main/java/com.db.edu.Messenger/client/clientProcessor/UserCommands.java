@@ -3,7 +3,7 @@ package com.db.edu.Messenger.client.clientProcessor;
 public class UserCommands {
     private final String send = "/snd";
     private final String name = "/chid";
-    private final String history = "/history";
+    private final String history = "/hist";
     private final String close = "/close";
     private final String wrong = "/wrong";
 

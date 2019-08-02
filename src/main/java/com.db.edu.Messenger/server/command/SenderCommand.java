@@ -1,35 +1,48 @@
 package com.db.edu.Messenger.server.command;
 
-import com.db.edu.Messenger.server.ClientReceiverSession;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SenderCommand extends Command {
     private List<BufferedWriter> receiversList;
 
     //private final Date date;
     private final SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
-    private String dateInString;
+    private String messageDate;
     private final String message;
+    private BufferedWriter fileWriter;
+    private final String fileName = "history.txt";
 
-    public SenderCommand(String dateInString, String message, List<BufferedWriter> receiversList) {
+    public SenderCommand(String messageDate, String message, List<BufferedWriter> receiversList) {
         this.message = message;
-        this.dateInString = dateInString;
+        this.messageDate = messageDate;
         this.receiversList = receiversList;
+        try {
+            fileWriter = new BufferedWriter(new FileWriter(new File(fileName), true));
+        } catch (IOException e) {
+            System.out.println(
+                    "Something went wrong with opening file with history! Sorry:("
+            );
+        }
     }
 
     @Override
     String generateAns() {
-        return dateInString + " " + message;
+        return messageDate + " " + message;
     }
 
     @Override
     void send() {
         String answer = generateAns();
+        try {
+            fileWriter.write(answer);
+            fileWriter.newLine();
+            fileWriter.flush();
+        } catch (IOException e) {
+            System.out.println("Can't save message");
+        }
+
         for(BufferedWriter receiver: receiversList){
             try {
                 receiver.write(answer);
