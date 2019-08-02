@@ -1,55 +1,50 @@
-package com.db.edu.Messenger.command;
+package com.db.edu.Messenger.server.command;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class HistoryCommand extends Command {
     private BufferedWriter receiver;
-    private final String dateInString;
-    private BufferedReader reader;
-    private final File file;
-    private FileReader fileReader;
+    private final String messageDate;
+    private BufferedReader fileReader;
+    private final String fileName = "history.txt";
 
-    public HistoryCommand(String dateInString) {
-        this.dateInString = dateInString;
-        file = new File("1.txt"); //TODO change
+    public HistoryCommand(String messageDate, BufferedWriter receiver) {
+        this.messageDate = messageDate;
         try {
-            fileReader = new FileReader(file);
+            fileReader = new BufferedReader(new FileReader(new File(fileName)));
         } catch (IOException e) {
             System.out.println(
                     "Something went wrong with opening file with history! Sorry:("
             );
         }
-        reader = new BufferedReader(fileReader);
-        receiver = null;//TODO change
+        this.receiver = receiver;
     }
 
     @Override
     String generateAns() {
-        String line = "";
-        String resultLine = "";
+        String line;
+        StringBuilder resultLine = new StringBuilder();
         do {
             try {
-                line = reader.readLine();
+                line = fileReader.readLine();
             } catch (IOException e) {
                 System.out.println(
                         "Something went wrong with reading file with history! Sorry:("
                 );
                 line = null;
             }
-            resultLine +=line;
+            resultLine.append(line + System.lineSeparator());
         } while (line != null);
-        return resultLine;
+        return resultLine.toString();
     }
 
     @Override
     void send() {
         try {
             receiver.write(generateAns());
+            fileReader.close();
         } catch (IOException e) {
-            System.out.println("Can't send to history of messages");
+            System.out.println("Can't send history of messages to client");
         }
     }
 }

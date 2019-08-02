@@ -1,15 +1,13 @@
-package com.db.edu.Messenger.command;
+package com.db.edu.Messenger.server.command;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SenderCommand extends Command {
-    public static List<BufferedWriter> receiversList = new ArrayList<BufferedWriter>();
+    protected static List<BufferedWriter> receiversList = new CopyOnWriteArrayList<>();
 
     //private final Date date;
     private final SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
