@@ -25,7 +25,7 @@ public class HistoryCommand extends Command {
     }
 
     @Override
-    String generateAns() {
+    String generateAnswer() {
         String line;
         StringBuilder resultLine = new StringBuilder();
         do {
@@ -45,7 +45,7 @@ public class HistoryCommand extends Command {
     @Override
     void send() {
         try {
-            receiver.write(generateAns());
+            receiver.write(generateAnswer());
             fileReader.close();
         } catch (IOException e) {
             System.out.println("Can't send history of messages to client");

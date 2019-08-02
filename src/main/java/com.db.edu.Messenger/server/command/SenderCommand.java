@@ -1,6 +1,8 @@
 package com.db.edu.Messenger.server.command;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -35,13 +37,13 @@ public class SenderCommand extends Command {
     }
 
     @Override
-    String generateAns() {
+    String generateAnswer() {
         return messageDate + " " + message;
     }
 
     @Override
     void send() {
-        String answer = generateAns();
+        String answer = generateAnswer();
         try {
             fileWriter.write(answer);
             fileWriter.newLine();
