@@ -50,7 +50,7 @@ public class ClientConnectionService {
             case "/snd":
                 return new SenderCommand(clientCommand[0], clientCommand[2], receiversList);
             case "/hist":
-                return new HistoryCommand(clientCommand[0], clientOutputStream);
+                return new HistoryCommand(clientOutputStream);
             default:
                 return null;
         }
