@@ -8,10 +8,12 @@ import java.net.Socket;
 
 public class ClientReceiverSession extends Thread {
     private Socket client;
+    private String name;
     private ClientConnectionService clientConnectionService;
 
-    ClientReceiverSession(Socket client) {
+    ClientReceiverSession(Socket client, String name) {
         this.client = client;
+        this.name = name;
         clientConnectionService = new ClientConnectionService(client);
         SenderCommand.receiversList.add(clientConnectionService.getClientOutputStream());
     }
@@ -21,24 +23,6 @@ public class ClientReceiverSession extends Thread {
         while (!isInterrupted()) {
 
         }
-    }
-
-    public void logClientMessages() {
-        String MessageStatus = "OK";
-
-        try {
-            while (!isInterrupted()) {
-                String messageClientRepresentation = clientConnectionService.getClientLogMessage();
-                Command messageInternalRepresentation = CommandRequestHandler.parseClientMessage(messageClientRepresentation);
-
-                clientConnectionService.passCommandExecutionStatus(MessageStatus);
-                MessageStatus = "OK";
-            }
-        } catch (Exception e) {
-            System.out.println("Client closed connection");
-        }
-
-        close();
     }
 
     public void close() {

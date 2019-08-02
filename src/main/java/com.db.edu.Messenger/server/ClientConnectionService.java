@@ -21,7 +21,7 @@ public class ClientConnectionService {
                             new BufferedOutputStream(
                                     client.getOutputStream())));
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             close();
 //            throw new FailEstablishConnectionException("can`t establish server connection to client", e);
         }
@@ -31,7 +31,7 @@ public class ClientConnectionService {
         try {
             return clientInputStream.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
 //            throw new FailReceiveClientMessageException("can`t read client message", e);
         }
         return null;
@@ -45,7 +45,7 @@ public class ClientConnectionService {
             clientOutputStream.newLine();
             clientOutputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
 //            throw new FailSendLogStatusToClientException("can`t send log execution status to client", e);
         }
     }
@@ -59,7 +59,7 @@ public class ClientConnectionService {
                 clientInputStream.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
 //            throw new ShutdownServerException("can`t shutdown server", e);
         }
     }
