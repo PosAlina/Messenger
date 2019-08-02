@@ -3,10 +3,22 @@
 package com.db.edu.Messenger.server;
 
 
+import com.db.edu.Messenger.server.command.Command;
+import com.db.edu.Messenger.server.command.HistoryCommand;
+import com.db.edu.Messenger.server.command.SenderCommand;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ClientConnectionService {
+    private static List<BufferedWriter> receiversList = new CopyOnWriteArrayList<>();
+
+    public static void addReceiver(BufferedWriter receiver) {
+        ClientConnectionService.receiversList.add(receiver);
+    }
+
     private BufferedReader clientInputStream;
     private BufferedWriter clientOutputStream;
 
@@ -24,6 +36,18 @@ public class ClientConnectionService {
 //            e.printStackTrace();
             close();
 //            throw new FailEstablishConnectionException("can`t establish server connection to client", e);
+        }
+    }
+
+    public Command parseClientMessage (String message) {
+        String[] clientCommand = message.split("\\s+", 3);
+        switch (clientCommand[1]) {
+            case "/snd":
+                return new SenderCommand(clientCommand[0], clientCommand[2], receiversList);
+            case "/hist":
+                return new HistoryCommand(clientCommand[0], clientOutputStream);
+            default:
+                return null;
         }
     }
 
