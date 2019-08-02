@@ -8,6 +8,12 @@ import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Class for establishing connection server with SenderClient
+ * @author Alisa M, Anna K, Elisavetta Ph
+ * @version 1.3
+ */
+
 public class ClientSenderSession extends Thread {
     private Socket client;
     private String name;

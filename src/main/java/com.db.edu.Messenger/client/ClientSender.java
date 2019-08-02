@@ -5,6 +5,12 @@ import com.db.edu.Messenger.client.clientProcessor.ClientMessageHandler;
 import com.db.edu.Messenger.client.clientProcessor.ServiceCommands;
 import com.db.edu.Messenger.exceptions.ClientConnectionException;
 
+/**
+ * Class for reading messages from console and sending them into server
+ * @author Alina P, Anastasiya M
+ * @version 1.3
+ */
+
 public class ClientSender {
     private static ClientConnector clientConnector;
 
@@ -29,7 +35,6 @@ public class ClientSender {
 
             } catch (ClientConnectionException e) {
                 System.out.println(e.getMessage());
-
                 try {
                     clientConnector.closeConnection();
 

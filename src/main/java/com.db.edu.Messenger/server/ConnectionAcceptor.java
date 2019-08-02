@@ -7,6 +7,12 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Class for connection server with client
+ * @author Alisa M, Anna K, Elisavetta Ph
+ * @version 1.3
+ */
+
 public class ConnectionAcceptor extends Thread {
     private static ServerSocket serverSocket;
 

@@ -1,5 +1,11 @@
 package com.db.edu.Messenger.client.clientProcessor;
 
+/**
+ * Class for storing commands of chat
+ * @author Alina P, Anastasiya M
+ * @version 1.3
+ */
+
 public class UserCommands {
     private final String send = "/snd";
     private final String name = "/chid";
