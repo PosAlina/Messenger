@@ -5,6 +5,11 @@ import com.db.edu.Messenger.exceptions.ClientConnectionException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class for parsing messages
+ * @author Alina P, Anastasiya M
+ * @version 1.3
+ */
 
 public class ClientMessageHandler {
     private static UserCommands userCommands = new UserCommands();

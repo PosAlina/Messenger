@@ -1,12 +1,15 @@
 package com.db.edu.Messenger.server.command;
 
-import com.db.edu.Messenger.server.ClientReceiverSession;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * Class for processing messages from clients
+ * @author Alisa M, Anna K, Elisavetta Ph
+ * @version 1.3
+ */
 
 public class SenderCommand extends Command {
     private List<BufferedWriter> receiversList;

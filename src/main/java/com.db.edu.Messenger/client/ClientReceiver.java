@@ -4,6 +4,12 @@ import com.db.edu.Messenger.client.clientProcessor.ClientConnector;
 import com.db.edu.Messenger.client.clientProcessor.ServiceCommands;
 import com.db.edu.Messenger.exceptions.ClientConnectionException;
 
+/**
+ * Class for receiving messages from server and print them into console
+ * @author Alina P, Anastasiya M
+ * @version 1.3
+ */
+
 public class ClientReceiver {
     public static void main(String[] args) {
         try {

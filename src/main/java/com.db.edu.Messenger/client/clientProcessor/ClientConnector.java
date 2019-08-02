@@ -5,6 +5,12 @@ import com.db.edu.Messenger.exceptions.ClientConnectionException;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * Class for connection client with server
+ * @author Alina P, Anastasiya M
+ * @version 1.3
+ */
+
 public class ClientConnector {
     private static int PORT = 8081;
     private Socket server;
@@ -47,9 +53,12 @@ public class ClientConnector {
 
     public void checkConnection() throws ClientConnectionException {
         try {
+            System.out.println("checkstart");
             receive();
+            System.out.println("checkend");
 
         } catch (ClientConnectionException e) {
+            closeConnection();
             throw new ClientConnectionException("Connection was closed");
         }
     }

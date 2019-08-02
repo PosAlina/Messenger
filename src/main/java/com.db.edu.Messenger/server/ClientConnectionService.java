@@ -2,7 +2,6 @@
 
 package com.db.edu.Messenger.server;
 
-
 import com.db.edu.Messenger.server.command.Command;
 import com.db.edu.Messenger.server.command.HistoryCommand;
 import com.db.edu.Messenger.server.command.SenderCommand;
@@ -11,6 +10,12 @@ import java.io.*;
 import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * Class for establishing connection server with clients
+ * @author Alisa M, Anna K, Elisavetta Ph
+ * @version 1.3
+ */
 
 public class ClientConnectionService {
     private static List<BufferedWriter> receiversList = new CopyOnWriteArrayList<>();

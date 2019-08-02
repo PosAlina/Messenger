@@ -2,6 +2,12 @@ package com.db.edu.Messenger.server.command;
 
 import java.io.*;
 
+/**
+ * Class for processing history for clients
+ * @author Alisa M, Anna K, Elisavetta Ph
+ * @version 1.3
+ */
+
 public class HistoryCommand extends Command {
     private BufferedWriter receiver;
     private final String messageDate;
