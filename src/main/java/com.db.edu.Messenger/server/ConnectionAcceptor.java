@@ -25,14 +25,14 @@ public class ConnectionAcceptor extends Thread {
                                 new BufferedInputStream(
                                         client.getInputStream())));
 
-                String[] whoAreYou = clientInputStream.readLine().split(" ", 2);
-                switch (whoAreYou[0]) {
+                String whoAreYou = clientInputStream.readLine();
+                switch (whoAreYou) {
                     case "#sender":
-                        ClientSenderSession clientSenderSession = new ClientSenderSession(client, whoAreYou[1]);
+                        ClientSenderSession clientSenderSession = new ClientSenderSession(client, "aaa");
                         clientSenderSession.start();
                         break;
                     case "#receiver":
-                        ClientReceiverSession clientReceiverSession = new ClientReceiverSession(client, whoAreYou[1]);
+                        ClientReceiverSession clientReceiverSession = new ClientReceiverSession(client, "aaa");
                         clientReceiverSession.start();
                         break;
                 }
