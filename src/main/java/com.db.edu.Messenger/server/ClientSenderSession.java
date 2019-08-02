@@ -32,7 +32,9 @@ public class ClientSenderSession extends Thread {
                 String messageClientRepresentation = clientConnectionService.getClientLogMessage();
 
                 Command messageInternalRepresentation = clientConnectionService.parseClientMessage(messageClientRepresentation);
-                messageInternalRepresentation.execute();
+                if (messageInternalRepresentation != null) {
+                    messageInternalRepresentation.execute();
+                }
                 clientConnectionService.passCommandExecutionStatus(messageStatus);
                 messageStatus = "OK";
             }

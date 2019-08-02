@@ -23,7 +23,6 @@ public class ClientReceiverSession extends Thread {
     @Override
     public void run() {
         while (!isInterrupted()) {
-
         }
     }
 
