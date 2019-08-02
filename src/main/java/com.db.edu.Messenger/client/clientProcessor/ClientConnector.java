@@ -6,15 +6,14 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientConnector {
-    private static int PORT;
+    private static int PORT = 8081;
     private Socket server;
     private BufferedReader in;
     private BufferedWriter out;
     private BufferedReader console;
 
-    public ClientConnector(int PORT) throws ClientConnectionException {
+    public ClientConnector() throws ClientConnectionException {
         try {
-            this.PORT = PORT;
             server = new Socket("localhost", PORT);
             in = new BufferedReader(
                     new InputStreamReader(
@@ -38,6 +37,7 @@ public class ClientConnector {
         try {
             out.close();
             in.close();
+            console.close();
             server.close();
 
         } catch (IOException e) {
@@ -67,10 +67,7 @@ public class ClientConnector {
 
     public String receive() throws ClientConnectionException {
         try {
-            if (this.PORT == 8081) {System.out.println("start");}
-            String mes = in.readLine();
-            if (this.PORT == 8081) {System.out.println("end" + mes);}
-return mes;
+            return in.readLine();
         } catch (IOException e) {
             throw new ClientConnectionException("Message don`t received");
         }

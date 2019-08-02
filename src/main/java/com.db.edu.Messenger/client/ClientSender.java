@@ -2,6 +2,7 @@ package com.db.edu.Messenger.client;
 
 import com.db.edu.Messenger.client.clientProcessor.ClientConnector;
 import com.db.edu.Messenger.client.clientProcessor.ClientMessageHandler;
+import com.db.edu.Messenger.client.clientProcessor.ServiceCommands;
 import com.db.edu.Messenger.exceptions.ClientConnectionException;
 
 public class ClientSender {
@@ -9,7 +10,7 @@ public class ClientSender {
 
     public static void main(String[] args) {
         try {
-            clientConnector = new ClientConnector(8081);
+            clientConnector = new ClientConnector();
 
             createCheckerConnection();
             createMessageReaderAndSender();
@@ -30,7 +31,6 @@ public class ClientSender {
                 System.out.println(e.getMessage());
 
                 try {
-                    System.out.println("ss");
                     clientConnector.closeConnection();
 
                 } catch (ClientConnectionException ex) {
@@ -43,11 +43,10 @@ public class ClientSender {
 
     private static void createMessageReaderAndSender() throws ClientConnectionException {
         ClientMessageHandler clientMessageHanlder = new ClientMessageHandler(clientConnector);
-        clientMessageHanlder.authorize();
-
+        //clientMessageHanlder.authorize();
+        clientConnector.send(ServiceCommands.sender());
         while (true) {
             String message = clientConnector.read();
-
             String date = clientMessageHanlder.parseDate();
             message = clientMessageHanlder.parseMessage(message);
 
@@ -57,7 +56,6 @@ public class ClientSender {
             if (clientMessageHanlder.isWrongMessage(message)) {
                 continue;
             }
-
             clientConnector.send(date + " " + message);
         }
 
