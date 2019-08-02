@@ -1,56 +1,26 @@
 package com.db.edu.Messenger.client;
 
-import java.io.*;
-import java.net.Socket;
+import com.db.edu.Messenger.client.clientProcessor.ClientConnector;
+import com.db.edu.Messenger.exceptions.ClientConnectionException;
 
 public class ClientReceiver {
-    private final static int PORT = 8081;
-    private static BufferedReader in;
-    private static BufferedWriter out;
-
     public static void main(String[] args) {
-        boolean connectionOpen = false;
-        try (final Socket server = new Socket("localhost", PORT)) {
-            connectionOpen = openConnection(connectionOpen, server);
-            while (connectionOpen) {
-                String message = receiveMessage();
-                System.out.println(message);
+        try {
+            ClientConnector clientConnector = new ClientConnector(8081);
+
+            try {
+                while (true) {
+                    String message = clientConnector.receive();
+                    clientConnector.print(message);
+                }
+
+            } catch (ClientConnectionException e) {
+                System.out.println("Connection was closed");
+                clientConnector.closeConnection();
             }
-            closeConnection();
-        } catch (IOException e) {
-            closeConnection();
+
+        } catch (ClientConnectionException e) {
+            System.out.println(e.getMessage());
         }
     }
-
-    private static boolean openConnection(boolean connectionOpen, Socket server) {
-        if (connectionOpen) return true;
-        try {
-            in = new BufferedReader(
-                    new InputStreamReader(
-                            new BufferedInputStream(
-                                    server.getInputStream())));
-            out = new BufferedWriter(
-                    new OutputStreamWriter(
-                            new BufferedOutputStream(
-                                    server.getOutputStream())));
-            out.write("#receiver");
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    private static void closeConnection() {
-        try {
-            out.close();
-            in.close();
-        } catch (IOException e) {
-        }
-    }
-
-    private static String receiveMessage() throws IOException {
-        String message = in.readLine();
-        return message;
-    }
-
 }
