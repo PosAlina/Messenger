@@ -7,7 +7,7 @@ package com.db.edu.Messenger.server.command;
  */
 
 public abstract class Command {
-    abstract String generateAns();
+    abstract String generateAnswer();
 
     abstract void send();
 
