@@ -35,6 +35,7 @@ public class ClientMessageHandler {
 
     private void checkCorrectName(String userName) throws ClientConnectionException {
         //clientConnector.send(serviceCommands.sender() + userName);
+        clientConnector.send(serviceCommands.sender());
     }
 
     public String parseMessage(String message) throws ClientConnectionException {
