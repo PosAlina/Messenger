@@ -11,6 +11,8 @@ import com.db.edu.Messenger.exceptions.ClientConnectionException;
  */
 
 public class ClientReceiver {
+    private ClientReceiver() { }
+
     public static void main(String[] args) {
         try {
             ClientConnector clientConnector = new ClientConnector();
@@ -23,8 +25,8 @@ public class ClientReceiver {
                 }
 
             } catch (ClientConnectionException e) {
-                System.out.println("Connection was closed");
                 clientConnector.closeConnection();
+                throw new ClientConnectionException("Connection was closed");
             }
 
         } catch (ClientConnectionException e) {
