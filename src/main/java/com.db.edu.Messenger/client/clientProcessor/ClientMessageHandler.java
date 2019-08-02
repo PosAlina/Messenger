@@ -74,4 +74,9 @@ public class ClientMessageHandler {
     public boolean isWrongMessage(String message) {
         return userCommands.isWrong(message);
     }
+
+    public boolean isHistoryMessage(String message) {
+        return userCommands.isHistory(message);
+    }
+
 }

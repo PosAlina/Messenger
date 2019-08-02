@@ -54,6 +54,7 @@ public class ClientConnector {
     public void checkConnection() throws ClientConnectionException {
         try {
             receive();
+
         } catch (ClientConnectionException e) {
             closeConnection();
             throw new ClientConnectionException("Connection was closed");
